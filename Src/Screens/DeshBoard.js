@@ -1,13 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Text,
-  Keyboard,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 
 //import User from "./User";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,38 +10,19 @@ import {
   fetchAllTodo,
 } from "../Redux/Slice/globalSlice";
 
-const checkUser = (userName) => {
-  Keyboard.dismiss();
-  if (userName === "") {
-    return false;
-  } else {
-    return true;
-  }
-};
-
 const DeshBoard = ({ navigation }) => {
   const { userName, shouldShowUser, token } = useSelector(
     (state) => state.global
   );
-  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
       <User navigation={navigation} />
-      <View style={styles.logo}>
-        <Image
-          style={styles.tinyLogo}
-          source={require("../Icons/logo-1.png")}
-        />
-        {/* <Text style={styles.logo_text}>Task-Management</Text> */}
-      </View>
-
       <View>
         <Text>Get Started</Text>
         <View style={styles.boxs}>
           <TouchableOpacity
             onPress={() => {
-              //dispatch(fetchAllTodo(token));
               navigation.navigate("Task");
             }}
             style={styles.box}

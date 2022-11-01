@@ -1,20 +1,16 @@
+import { Formik } from "formik";
 import {
   StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   TextInput,
-  Keyboard,
-  Alert,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Formik } from "formik";
 import * as yup from "yup";
-import uuid from "react-native-uuid";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchAllTodo, addNewTask } from "../Redux/Slice/globalSlice";
+import { addNewTask } from "../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
   title: yup.string().required(),
@@ -40,7 +36,7 @@ const AddTask = ({ navigation }) => {
             token: token,
           };
           console.log("calling");
-          await dispatch(addNewTask(info));
+          dispatch(addNewTask(info));
           //
         }}
       >

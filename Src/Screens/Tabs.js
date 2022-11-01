@@ -57,18 +57,21 @@ export default function App() {
       // })}
     >
       <Tab.Screen
-        name="Home"
+        name="Home1"
         component={DeshBoard}
         options={{
           // header: () => {
-          //   <User />;
+          //   return(
+          //     <View style={{ backgroudColor: "red" }}>
+          //     <User />
+          //   </View>;
+          //   ),
           // },
           tabBarIcon: ({ focused }) => (
             <View
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                // top: 10,
               }}
             >
               <Image
@@ -183,6 +186,11 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 5,
+  },
+  Header: {
+    height: 100,
+    width: 100,
+    margin: 100,
   },
 });
 

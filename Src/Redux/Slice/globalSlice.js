@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://fde7-43-245-140-38.ngrok.io";
+const BASE_URL = "https://3626-43-245-140-36.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -141,15 +141,17 @@ export const updateTask = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   "task/deleteTask",
   async (params) => {
+    console.log("I'm in");
     const apiSubDirectory = "tasks";
     const apiDirectory = "private";
-    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.taskId}`;
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.id}`;
     const response = await axios({
       method: "DELETE",
       url,
       headers: { Authorization: `Bearer ${params.token}` },
     });
-    //   return response.data;
+    console.log("delete sucessful");
+    return params.id;
   }
 );
 
@@ -292,9 +294,12 @@ export const globalSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
-      state.taskList = state.taskList.filter(
-        (task) => task.id !== action.payload
-      );
+      console.log(action.payload);
+      state.taskList = state.taskList.filter((task) => {
+        console.log(task.tasks.id);
+        task.tasks?.id !== action?.payload;
+      });
+      // state.isUpdated = true;
       state.isLoading = false;
     });
     builder.addCase(deleteTask.rejected, (state, action) => {

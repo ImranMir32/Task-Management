@@ -8,13 +8,21 @@ import AddMembers from "./Src/Screens/AddMembers";
 import Tabs from "./Src/Screens/Tabs";
 import store from "./Src/Redux/Store/store";
 import { Provider } from "react-redux";
+import DisplayTask from "./Src/Screens/DisplayTask";
+import Confirm from "./Src/Screens/Confirm";
 
 export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Tabs"
             component={Tabs}
@@ -24,7 +32,8 @@ export default function App() {
           />
           <Stack.Screen name="Add" component={AddTask} />
           <Stack.Screen name="Add-Members" component={AddMembers} />
-          {/* <Stack.Screen name="Task" component={Home} /> */}
+          <Stack.Screen name="DisplayTask" component={DisplayTask} />
+          <Stack.Screen name="Confirm" component={Confirm} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

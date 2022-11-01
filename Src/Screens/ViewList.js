@@ -17,26 +17,26 @@ const ViewList = ({ navigation, data }) => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchAllTodo(token));
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("(viewlist)   updat--->");
-  //   if (isUpdated) {
-  //     dispatch(fetchAllTodo(token));
-  //     dispatch(isUpdated(false));
-  //   }
-  // }, [isUpdated]);
-
   const renderItem = ({ item }) => {
-    console.log("(viewlist)  title -> ", item.title);
+    //console.log("(viewlist)  title -> ", item.title);
     return (
-      <TouchableOpacity onPress={() => {}}>
-        <View style={styles.item}>
-          <Text>{item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            const info = {
+              id: item.id,
+              title: item.title,
+              description: item.description,
+            };
+            console.log(info);
+            navigation.navigate("DisplayTask", { info: info });
+          }}
+        >
+          <View style={styles.item_}>
+            <Text>{item.title}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
   },
   items: {
     margin: 20,
-    marginBottom: 45,
+    marginBottom: 160,
   },
-  item: {
+  item_: {
     marginTop: 10,
     marginBottom: 10,
     padding: 20,

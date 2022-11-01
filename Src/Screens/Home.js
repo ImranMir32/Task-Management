@@ -1,26 +1,24 @@
+import { Formik } from "formik";
 import {
-  View,
+  ActivityIndicator,
+  Image,
+  Modal,
   StyleSheet,
-  KeyboardAvoidingView,
+  Text,
   TextInput,
   TouchableOpacity,
-  Image,
-  Text,
-  Keyboard,
-  ActivityIndicator,
-  Modal,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 import {
   setModalOpenSignUp,
   setShouldShowError,
   signIn,
 } from "../Redux/Slice/globalSlice";
-import { Formik } from "formik";
-import * as yup from "yup";
 
+import React, { useEffect } from "react";
 import SignUp from "../Components/SignUp";
-import React, { useState, useEffect } from "react";
 
 const signInSchema = yup.object({
   email: yup.string().email().required(),
@@ -54,7 +52,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <Formik
-            initialValues={{ email: "Kp@gmail.com", password: "1234" }}
+            initialValues={{ email: "King@gmail.com", password: "1234" }}
             validationSchema={signInSchema}
             onSubmit={(values, actions) => {
               actions.resetForm();

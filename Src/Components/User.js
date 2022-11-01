@@ -9,7 +9,6 @@ const User = ({ navigation }) => {
   const dispatch = useDispatch();
   return (
     <View style={styles.container}>
-      <Text style={styles.todo}>ToDo</Text>
       <View style={styles.bar}>
         <Text style={styles.userName}>Mr.{userName}</Text>
         <TouchableOpacity
@@ -17,7 +16,7 @@ const User = ({ navigation }) => {
             dispatch(clearData());
             navigation.popToTop();
           }}
-          style={styles.button}
+          // style={styles.button}
         >
           <Image
             style={styles.tinyLogo}
@@ -34,11 +33,6 @@ export default User;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-  },
-  todo: {
-    marginLeft: 15,
-    fontWeight: "bold",
-    fontSize: 25,
   },
   bar: {
     flexDirection: "row",

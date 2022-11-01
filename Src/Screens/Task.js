@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTodo } from "../Redux/Slice/globalSlice";
 
@@ -7,15 +7,15 @@ import ViewList from "./ViewList";
 
 const Task = ({ navigation }) => {
   const { token, isUpdated } = useSelector((state) => state.global);
-  const taskList = useSelector((state) => state.global.taskList.tasks);
+  const taskList = useSelector((state) => state.global.taskList?.tasks);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTodo(token));
   }, []);
-  // useEffect(() => {
-  //   if (isUpdated) dispatch(fetchAllTodo(token));
-  // }, [isUpdated]);
+  useEffect(() => {
+    if (isUpdated) dispatch(fetchAllTodo(token));
+  }, [isUpdated]);
 
   return (
     <View style={styles.container}>
