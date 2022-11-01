@@ -16,6 +16,7 @@ import {
   setUserName,
   // logIn,
   setShouldShowUser,
+  fetchAllTodo,
 } from "../Redux/Slice/globalSlice";
 
 const checkUser = (userName) => {
@@ -28,7 +29,9 @@ const checkUser = (userName) => {
 };
 
 const DeshBoard = ({ navigation }) => {
-  const { userName, shouldShowUser } = useSelector((state) => state.global);
+  const { userName, shouldShowUser, token } = useSelector(
+    (state) => state.global
+  );
   const dispatch = useDispatch();
 
   return (
@@ -47,6 +50,7 @@ const DeshBoard = ({ navigation }) => {
         <View style={styles.boxs}>
           <TouchableOpacity
             onPress={() => {
+              //dispatch(fetchAllTodo(token));
               navigation.navigate("Task");
             }}
             style={styles.box}

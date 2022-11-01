@@ -14,7 +14,7 @@ const User = ({ navigation }) => {
         <Text style={styles.userName}>Mr.{userName}</Text>
         <TouchableOpacity
           onPress={() => {
-            // dispatch(clearData());
+            dispatch(clearData());
             navigation.popToTop();
           }}
           style={styles.button}

@@ -14,23 +14,15 @@ import uuid from "react-native-uuid";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  setShouldShowTitle,
-  setTitle,
-  setDescription,
-  uploadTask,
-  addNewTask,
-} from "../Redux/Slice/globalSlice";
+import { fetchAllTodo, addNewTask } from "../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
   title: yup.string().required(),
-  // description: yup.string().required(),
+  description: yup.string(),
 });
 
 const AddTask = ({ navigation }) => {
-  const { user, title, shouldShowTitle, description, token } = useSelector(
-    (state) => state.global
-  );
+  const { token } = useSelector((state) => state.global);
   const dispatch = useDispatch();
 
   return (
@@ -38,17 +30,18 @@ const AddTask = ({ navigation }) => {
       <Formik
         initialValues={{ title: "", description: "" }}
         validationSchema={signInSchema}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
           actions.resetForm();
           console.log(values);
           const info = {
             title: values.title,
             description: values.description,
-            memberId: uuid.v4(),
+            memberId: 1,
             token: token,
           };
-
-          dispatch(addNewTask(info));
+          console.log("calling");
+          await dispatch(addNewTask(info));
+          //
         }}
       >
         {(props) => (
@@ -85,22 +78,20 @@ const AddTask = ({ navigation }) => {
             <View style={styles.boxs}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.goBack();
+                  navigation.navigate("Task");
                 }}
                 style={styles.button}
               >
                 <Text style={styles.text}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {
+                onPress={async () => {
                   props.handleSubmit();
                   console.log("yes");
-                  if (
-                    !props.errors.title &&
-                    !props.errors.description &&
-                    props.touched.title
-                  )
-                    navigation.goBack();
+                  if (!props.errors.title && props.touched.title) {
+                    console.log("first");
+                    navigation.navigate("Task");
+                  }
                 }}
                 style={styles.button}
               >

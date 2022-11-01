@@ -1,23 +1,21 @@
-import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Text,
-  Keyboard,
-} from "react-native";
+import { useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserName,
-  // logIn,
-  setShouldShowUser,
-} from "../Redux/Slice/globalSlice";
+import { fetchAllTodo } from "../Redux/Slice/globalSlice";
+
+import ViewList from "./ViewList";
 
 const Task = ({ navigation }) => {
-  const { userName, shouldShowUser } = useSelector((state) => state.global);
+  const { token, isUpdated } = useSelector((state) => state.global);
+  const taskList = useSelector((state) => state.global.taskList.tasks);
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllTodo(token));
+  }, []);
+  // useEffect(() => {
+  //   if (isUpdated) dispatch(fetchAllTodo(token));
+  // }, [isUpdated]);
 
   return (
     <View style={styles.container}>
@@ -34,6 +32,7 @@ const Task = ({ navigation }) => {
           <Text style={styles.text}>Add New</Text>
         </TouchableOpacity>
       </View>
+      <ViewList navigation={navigation} data={taskList} />
     </View>
   );
 };

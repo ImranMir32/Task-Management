@@ -2,14 +2,15 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://3b74-43-245-140-39.in.ngrok.io/public";
+const BASE_URL = "https://fde7-43-245-140-38.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
   Keyboard.dismiss();
   console.log("gese");
   const apiSubDirectory = "register";
-  const url = `${BASE_URL}/${apiSubDirectory}/`;
+  const apiDirectory = "public";
+  const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
   console.log(url);
   const response = await axios({
     method: "POST",
@@ -32,8 +33,8 @@ export const signIn = createAsyncThunk("global/signIn", async (params) => {
   Keyboard.dismiss();
   console.log(params);
   const apiSubDirectory = "login";
-  const url = `${BASE_URL}/${apiSubDirectory}/`;
-  //console.log(url);
+  const apiDirectory = "public";
+  const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
   const response = await axios({
     method: "POST",
     url,
@@ -75,118 +76,80 @@ export const addNewTask = createAsyncThunk(
   }
 );
 
-//create-Todo
-const createTodo = (task) => {
-  return {
-    title: task.title,
-    description: task.description,
-    status: task.is_completed,
-    id: task.id,
-    date: task.created_at.slice(0, 10),
-  };
-};
-
 //fetchAllTodo
 export const fetchAllTodo = createAsyncThunk(
-  "global/fetchAllTodo",
-  async (id) => {
+  "task/fetchAllTodo",
+
+  async (token) => {
+    console.log("token-->");
+    console.log(token);
     const apiSubDirectory = "tasks";
-    const url = `${BASE_URL}/${apiSubDirectory}/`;
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
     const response = await axios({
       method: "GET",
       url,
-      headers: {
-        Userid: id,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
-    // Alert.alert("aikhan a");
-    const currentTaskList = response.data;
-    currentTaskList.map((task) => {
-      return createTodo(task);
-    });
-    return currentTaskList;
+    console.log("fetching --->");
+    // console.log(response.data);
+
+    return response.data;
   }
 );
 
-//uploadtask
-export const uploadTask = createAsyncThunk("global/uploadTask", async (obj) => {
-  Keyboard.dismiss();
+// export const getTask = async (params) => {
+//   const apiSubDirectory = "tasks";
+//   const apiDirectory = "private";
 
-  const apiSubDirectory = "tasks";
-  const url = `${BASE_URL}/${apiSubDirectory}/`;
-  const response = await axios({
-    method: "POST",
-    url,
-    headers: {
-      userid: obj.Id,
-    },
-    data: {
-      title: obj.title,
-      description: obj.description,
-    },
-  });
+//   const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.Id}`;
+//   const response = await axios({
+//     method: "GET",
+//     url,
+//     headers: { Authorization: `Bearer ${params.token}` },
+//   });
 
-  return response.data;
-});
+//   return response.data;
+// };
 
-//isChecked
-export const isChecked = createAsyncThunk("global/isChecked", async (info) => {
-  const apiSubDirectory = "tasks";
-  const url = `${BASE_URL}/${apiSubDirectory}/${info.id}/`;
-  const response = await axios({
-    method: "PATCH",
-    url,
-    headers: {
-      Userid: info.ID,
-    },
-    data: {
-      is_completed: !info.status,
-    },
-  });
-
-  return response.data;
-});
-
-//updateTheTask
-export const updateTheTask = createAsyncThunk(
-  "global/updateTheTask",
-  async (info) => {
-    Keyboard.dismiss();
-
+//updateTask
+export const updateTask = createAsyncThunk(
+  "task/updateTask",
+  async (params) => {
     const apiSubDirectory = "tasks";
-    const url = `${BASE_URL}/${apiSubDirectory}/${info.id}/`;
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.taskId}`;
     const response = await axios({
       method: "PATCH",
       url,
       headers: {
-        Userid: info.ID,
+        Authorization: `Bearer ${params.token}`,
+        "Content-Type": "application/json",
       },
       data: {
-        title: info.title,
-        description: info.description,
+        title: params.title,
+        description: params.description,
+        memberId: params.memberId,
       },
     });
-
     return response.data;
   }
 );
 
 //deleteTask
 export const deleteTask = createAsyncThunk(
-  "global/deleteTask",
-  async (info) => {
-    Keyboard.dismiss();
+  "task/deleteTask",
+  async (params) => {
     const apiSubDirectory = "tasks";
-    const url = `${BASE_URL}/${apiSubDirectory}/${info.id}/`;
-    await axios({
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.taskId}`;
+    const response = await axios({
       method: "DELETE",
       url,
-      headers: {
-        Userid: info.ID,
-      },
+      headers: { Authorization: `Bearer ${params.token}` },
     });
-    return info.id;
+    //   return response.data;
   }
 );
 
@@ -209,14 +172,13 @@ export const globalSlice = createSlice({
     taskList: [],
     user: {},
     isLoading: false,
+    isUpdated: false,
   },
 
   //reducer
   reducers: {
     setUserName: (state, action) => {
-      //state,
       state.userName = action.payload;
-      //console.log(state.userName);
     },
     setModalOpenSignUp: (state, action) => {
       state.modalOpenSignUp = action.payload;
@@ -225,18 +187,9 @@ export const globalSlice = createSlice({
     setShouldShowError: (state, action) => {
       state.shouldShowError = action.payload;
     },
-    // setShouldShowUser: (state, action) => {
-    //   state.shouldShowUser = action.payload;
-    // },
-    setTitle: (state, action) => {
-      state.title = action.payload;
+    setIsUpdate: (state, action) => {
+      state.isUpdated = action.payload;
     },
-    setDescription: (state, action) => {
-      state.description = action.payload;
-    },
-    // setShouldShowTitle: (state, action) => {
-    //   state.shouldShowTitle = action.payload;
-    // },
 
     clearData: (state) => {
       state.userName = "";
@@ -266,6 +219,7 @@ export const globalSlice = createSlice({
       state.isLoading = false;
       console.log(action.error.message);
     });
+
     //login
     builder.addCase(signIn.pending, (state) => {
       state.isLoading = true;
@@ -282,19 +236,20 @@ export const globalSlice = createSlice({
       console.log(action.error.message);
     });
 
-    //upload
-    builder.addCase(uploadTask.pending, (state) => {
-      state.isLoading = true;
+    //addNewTask
+    builder.addCase(addNewTask.pending, (state) => {
+      state.isUpdated = false;
     });
-    builder.addCase(uploadTask.fulfilled, (state, action) => {
+    builder.addCase(addNewTask.fulfilled, (state, action) => {
       state.title = "";
       state.description = "";
       state.shouldShowTitle = false;
-      state.isLoading = false;
-      state.taskList.push(action.payload);
+      state.isUpdated = true;
+      state.taskList = action.payload;
+      //  state.taskList.push(action.payload);
     });
-    builder.addCase(uploadTask.rejected, (state, action) => {
-      state.isLoading = false;
+    builder.addCase(addNewTask.rejected, (state, action) => {
+      state.isUpdated = false;
       console.log(action.payload);
     });
 
@@ -303,35 +258,19 @@ export const globalSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchAllTodo.fulfilled, (state, action) => {
+      console.log("get all todo");
       state.taskList = action.payload;
       state.isLoading = false;
     });
     builder.addCase(fetchAllTodo.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
     });
 
-    //isChecked
-    builder.addCase(isChecked.pending, (state) => {
-      state.isLoading = true;
+    //updateTask
+    builder.addCase(updateTask.pending, (state) => {
+      state.isUpdated = false;
     });
-    builder.addCase(isChecked.fulfilled, (state, action) => {
-      const task = state.taskList.find((todo) => {
-        if (todo.id === action.payload.id) return todo;
-      });
-      task.is_completed = action.payload.is_completed;
-      state.isLoading = false;
-    });
-    builder.addCase(isChecked.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.payload);
-    });
-
-    //updateTheTask
-    builder.addCase(updateTheTask.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(updateTheTask.fulfilled, (state, action) => {
+    builder.addCase(updateTask.fulfilled, (state, action) => {
       const task = state.taskList.find((todo) => {
         if (todo.id === action.payload.id) return todo;
       });
@@ -341,10 +280,10 @@ export const globalSlice = createSlice({
       state.title = "";
       state.description = "";
       state.shouldShowTitle = false;
-      state.isLoading = false;
+      state.isUpdated = true;
     });
-    builder.addCase(updateTheTask.rejected, (state, action) => {
-      state.isLoading = false;
+    builder.addCase(updateTask.rejected, (state, action) => {
+      state.isUpdated = false;
       console.log(action.payload);
     });
 
@@ -366,15 +305,10 @@ export const globalSlice = createSlice({
 });
 
 export const {
-  checkTitle,
   clearData,
   clear,
   checkDescription,
   setUserName,
-  setShouldShowUser,
-  setTitle,
-  setDescription,
-  setShouldShowTitle,
   setModalOpenSignUp,
   setShouldShowError,
 } = globalSlice.actions;

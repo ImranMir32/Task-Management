@@ -20,6 +20,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 import SignUp from "../Components/SignUp";
+import React, { useState, useEffect } from "react";
 
 const signInSchema = yup.object({
   email: yup.string().email().required(),
@@ -31,6 +32,12 @@ const Home = ({ navigation }) => {
     (state) => state.global
   );
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (userName !== "") {
+      navigation.navigate("Tabs");
+      dispatch(setShouldShowError(false));
+    }
+  });
 
   return (
     <>
@@ -47,7 +54,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: "Kp@gmail.com", password: "1234" }}
             validationSchema={signInSchema}
             onSubmit={(values, actions) => {
               actions.resetForm();
