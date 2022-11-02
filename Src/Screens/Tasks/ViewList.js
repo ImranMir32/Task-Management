@@ -6,33 +6,34 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllTodo, updateTask } from "../Redux/Slice/globalSlice";
+import { fetchAllTodo, updateTask } from "../../Redux/Slice/globalSlice";
 import React, { useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 
-const ViewMembers = ({ navigation, data }) => {
-  const { isLoading, token, isUpdated, membersList } = useSelector(
+const ViewList = ({ navigation, data }) => {
+  const { isLoading, token, isUpdated, taskList } = useSelector(
     (state) => state.global
   );
 
   const dispatch = useDispatch();
 
   const renderItem = ({ item }) => {
-    console.log("(viewlist)  title -> ", item.name);
+    //console.log("(viewlist)  title -> ", item.title);
     return (
       <View>
         <TouchableOpacity
           onPress={() => {
             const info = {
               id: item.id,
-              name: item.name,
+              title: item.title,
+              description: item.description,
             };
             console.log(info);
-            navigation.navigate("DisplayMember", { info: info });
+            navigation.navigate("DisplayTask", { info: info });
           }}
         >
           <View style={styles.item_}>
-            <Text>{item.name}</Text>
+            <Text>{item.title}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -52,7 +53,7 @@ const ViewMembers = ({ navigation, data }) => {
             keyboardShouldPersistTaps="handled"
           >
             <View style={styles.items}>
-              {console.log(membersList)}
+              {console.log(taskList)}
               {<FlatList data={data} renderItem={renderItem} />}
             </View>
           </View>
@@ -61,7 +62,7 @@ const ViewMembers = ({ navigation, data }) => {
     </>
   );
 };
-export default ViewMembers;
+export default ViewList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

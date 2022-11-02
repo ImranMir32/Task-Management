@@ -20,7 +20,7 @@ import {
   setDescription,
   uploadTask,
   addNewMember,
-} from "../Redux/Slice/globalSlice";
+} from "../../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
   name: yup.string().required(),

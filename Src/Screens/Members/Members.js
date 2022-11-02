@@ -1,42 +1,44 @@
 import { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllTodo } from "../Redux/Slice/globalSlice";
+import { fetchAllTodo, getAllMembers } from "../../Redux/Slice/globalSlice";
 
-import ViewList from "./ViewList";
+import ViewMembers from "./ViewMembers";
 
-const Task = ({ navigation }) => {
+const Members = ({ navigation }) => {
   const { token, isUpdated } = useSelector((state) => state.global);
-  const taskList = useSelector((state) => state.global.taskList?.tasks);
+  const membersList = useSelector((state) => state.global.membersList);
+  console.log("list-->", membersList);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllTodo(token));
+    console.log("calling");
+    dispatch(getAllMembers(token));
   }, []);
   useEffect(() => {
-    if (isUpdated) dispatch(fetchAllTodo(token));
+    if (isUpdated) dispatch(getAllMembers(token));
   }, [isUpdated]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text_}>All tasks</Text>
-      <Text style={styles.text__}>You will find all tasks here</Text>
+      <Text style={styles.text__}>You will find all members here</Text>
       <View style={styles.add}>
-        <Text style={styles.text_}>Here is all Tasks : </Text>
+        <Text style={styles.text_}>Here is all Members : </Text>
         <TouchableOpacity
           onPress={async () => {
-            navigation.navigate("Add");
+            navigation.navigate("AddMembers");
           }}
           style={styles.button}
         >
           <Text style={styles.text}>Add New</Text>
         </TouchableOpacity>
       </View>
-      <ViewList navigation={navigation} data={taskList} />
+      <ViewMembers navigation={navigation} data={membersList} />
     </View>
   );
 };
-export default Task;
+export default Members;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask } from "../Redux/Slice/globalSlice";
+import { deleteTask } from "../../Redux/Slice/globalSlice";
 
 export default Confirm = ({ navigation, route }) => {
   const { token } = useSelector((state) => state.global);

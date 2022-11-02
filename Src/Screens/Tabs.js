@@ -14,8 +14,8 @@ const Tab = createBottomTabNavigator();
 import User from "../Components/User";
 
 import DeshBoard from "./DeshBoard";
-import Task from "./Task";
-import Members from "./Members";
+import Task from "./Tasks/Task";
+import Members from "./Members/Members";
 // import Ionic from "react-native-vector-icons/Ionicons";
 // import { Ionicons } from "@expo/vector-icons";
 // //import { View } from "react-native";

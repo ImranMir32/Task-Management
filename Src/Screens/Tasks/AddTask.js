@@ -6,37 +6,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useEffect } from "react";
 import * as yup from "yup";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { addNewTask, editTask } from "../Redux/Slice/globalSlice";
+import { addNewTask } from "../../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
   title: yup.string().required(),
   description: yup.string(),
 });
 
-const EditTask = ({ navigation, route }) => {
+const AddTask = ({ navigation }) => {
   const { token } = useSelector((state) => state.global);
-
   const dispatch = useDispatch();
-  const title = route.params.info.title;
-  const description = route.params.info.description;
-  const id = route.params.info.id;
-  console.log(title);
-  //   const title = task.title;
-  //   const description = task.description;
-  //   const id = task.id;
-  //   useEffect(() => {
-  //     dispatch(setTitle(task.title));
-  //     dispatch(setDescription(task.description));
-  //   }, []);
+
   return (
     <View style={styles.back}>
       <Formik
-        initialValues={{ title: title, description: description }}
+        initialValues={{ title: "", description: "" }}
         validationSchema={signInSchema}
         onSubmit={async (values, actions) => {
           actions.resetForm();
@@ -45,19 +33,17 @@ const EditTask = ({ navigation, route }) => {
             title: values.title,
             description: values.description,
             memberId: 1,
-            id: id,
             token: token,
           };
           console.log("calling");
-          dispatch(editTask(info));
-          console.log("end");
+          dispatch(addNewTask(info));
           //
         }}
       >
         {(props) => (
           <View style={styles.container}>
             <View>
-              <Text style={styles.assign}>Edit Task :</Text>
+              <Text style={styles.assign}>Add Task :</Text>
             </View>
             <TextInput
               style={styles.input}
@@ -82,13 +68,13 @@ const EditTask = ({ navigation, route }) => {
               {props.touched.description && props.errors.description}
             </Text>
 
-            {/* <View>
-            <Text style={styles.assign}>Assign To:</Text>
-          </View> */}
+            <View>
+              <Text style={styles.assign}>Assign To:</Text>
+            </View>
             <View style={styles.boxs}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.goBack();
+                  navigation.navigate("Task");
                 }}
                 style={styles.button}
               >
@@ -100,12 +86,12 @@ const EditTask = ({ navigation, route }) => {
                   console.log("yes");
                   if (!props.errors.title && props.touched.title) {
                     console.log("first");
-                    navigation.goBack();
+                    navigation.navigate("Task");
                   }
                 }}
                 style={styles.button}
               >
-                <Text style={styles.text}>Save</Text>
+                <Text style={styles.text}>Submit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -114,18 +100,28 @@ const EditTask = ({ navigation, route }) => {
     </View>
   );
 };
-export default EditTask;
-
+export default AddTask;
 const styles = StyleSheet.create({
-  back: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#AADEFF",
-  },
   container: {
     marginTop: 65,
     alignItems: "center",
     justifyContent: "center",
+  },
+  back: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "#9DCEFF",
+  },
+  req: {
+    color: "red",
+  },
+
+  assign: {
+    margin: 10,
+    marginRight: 190,
+    fontWeight: "bold",
+    fontSize: 25,
+    // backgroundColor: "red",
   },
   input: {
     paddingVertical: 15,
@@ -136,18 +132,21 @@ const styles = StyleSheet.create({
     borderColor: "#c0c0c0",
     borderWidth: 1,
   },
-  req: {
-    color: "red",
+  boxs: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    height: 50,
+    margin: 30,
     width: 100,
-    marginTop: 10,
+    height: 50,
+    marginTop: 55,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 15,
     paddingHorizontal: 5,
-    borderRadius: 25,
+    borderRadius: 10,
     elevation: 3,
     backgroundColor: "white",
   },

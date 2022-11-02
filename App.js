@@ -2,17 +2,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
-import Home from "./Src/Screens/Home";
-import AddTask from "./Src/Screens/AddTask";
-import AddMembers from "./Src/Screens/AddMembers";
-import Tabs from "./Src/Screens/Tabs";
 import store from "./Src/Redux/Store/store";
 import { Provider } from "react-redux";
-import DisplayTask from "./Src/Screens/DisplayTask";
-import Confirm from "./Src/Screens/Confirm";
-import EditTask from "./Src/Screens/EditTask";
-import DisplayMember from "./Src/Screens/DisplayMember";
-import DeleteMember from "./Src/Screens/DisplayMember";
+
+import Home from "./Src/Screens/Home";
+import Tabs from "./Src/Screens/Tabs";
+
+//Tasks
+import AddTask from "./Src/Screens/Tasks/AddTask";
+import DisplayTask from "./Src/Screens/Tasks/DisplayTask";
+import EditTask from "./Src/Screens/Tasks/EditTask";
+import Confirm from "./Src/Screens/Tasks/Confirm";
+
+//Members
+import AddMembers from "./Src/Screens/Members/AddMembers";
+import DisplayMember from "./Src/Screens/Members/DisplayMember";
+import DeleteMember from "./Src/Screens/Members/DisplayMember";
 
 export default function App() {
   return (

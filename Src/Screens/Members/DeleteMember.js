@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMember } from "../Redux/Slice/globalSlice";
+import { deleteMember } from "../../Redux/Slice/globalSlice";
 
 const DeleteMember = ({ navigation, route }) => {
   const { token } = useSelector((state) => state.global);
