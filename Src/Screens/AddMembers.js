@@ -19,7 +19,7 @@ import {
   setTitle,
   setDescription,
   uploadTask,
-  addNewTask,
+  addNewMember,
 } from "../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
@@ -40,8 +40,13 @@ const AddMembers = ({ navigation }) => {
         validationSchema={signInSchema}
         onSubmit={(values, actions) => {
           actions.resetForm();
+          const info = {
+            name: values.name,
+            token: token,
+          };
+          console.log("add member");
 
-          // dispatch(addNewTask(info));
+          dispatch(addNewMember(info));
         }}
       >
         {(props) => (

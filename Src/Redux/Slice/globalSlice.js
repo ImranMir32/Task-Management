@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://5efb-43-245-140-38.in.ngrok.io";
+const BASE_URL = "https://2127-43-245-140-36.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -133,6 +133,79 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+//Members
+//get All Members
+export const getAllMembers = createAsyncThunk(
+  "member/getAllMembers",
+  async (token) => {
+    console.log("get all");
+    const apiSubDirectory = "members";
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
+    const response = await axios({
+      method: "GET",
+      url,
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // const memberList = response.data.members;
+    // console.log("get all yes");
+    // const newMemberList = memberList.map((member) => {
+    //   const taskCount = params.taskList.reduce((count, task) => {
+    //     if (member.id === task.memberId) {
+    //       count++;
+    //     }
+
+    //     return count;
+    //   }, 0);
+
+    //   member.taskCount = taskCount;
+    //   return member;
+    // });
+    // console.log("new list--> ", newMemberList);
+    // return newMemberList;
+
+    return response.data.members;
+  }
+);
+
+//Add new Member
+export const addNewMember = createAsyncThunk(
+  "task/addNewMember",
+  async (params) => {
+    console.log(params);
+    const apiSubDirectory = "members";
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
+    await axios({
+      method: "POST",
+      url,
+      headers: {
+        Authorization: `Bearer ${params.token}`,
+        "Content-Type": "application/json",
+      },
+      data: {
+        name: params.name,
+      },
+    });
+    console.log("member add sucessfully");
+  }
+);
+
+//deleteMember
+export const deleteMember = createAsyncThunk(
+  "task/deleteMember",
+  async (params) => {
+    const apiSubDirectory = "members";
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.memberId}`;
+    await axios({
+      method: "DELETE",
+      url,
+      headers: { Authorization: `Bearer ${params.token}` },
+    });
+  }
+);
+
 //globalSlice
 export const globalSlice = createSlice({
   name: "global",
@@ -147,6 +220,7 @@ export const globalSlice = createSlice({
     description: "",
     shouldShowError: false,
     taskList: [],
+    membersList: [],
     user: {},
     isLoading: false,
     isUpdated: false,
@@ -167,13 +241,6 @@ export const globalSlice = createSlice({
     setIsUpdate: (state, action) => {
       state.isUpdated = action.payload;
     },
-
-    // clearData: (state) => {},
-    // clear: (state) => {
-    //   state.title = "";
-    //   state.description = "";
-    //   state.shouldShowTitle = false;
-    // },
   },
 
   //API
@@ -261,6 +328,37 @@ export const globalSlice = createSlice({
       state.isUpdated = true;
     });
     builder.addCase(deleteTask.rejected, (state, action) => {
+      state.isUpdated = false;
+      console.log(action.payload);
+    });
+
+    //Members
+    //Get all members
+    builder.addCase(getAllMembers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllMembers.fulfilled, (state, action) => {
+      console.log("get all members");
+      state.membersList = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(getAllMembers.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+
+    //Add new members
+    builder.addCase(addNewMember.pending, (state) => {
+      state.isUpdated = false;
+    });
+    builder.addCase(addNewMember.fulfilled, (state, action) => {
+      // state.title = "";
+      //state.description = "";
+      //   state.shouldShowTitle = false;
+      state.isUpdated = true;
+      // state.taskList = action.payload;
+      //  state.taskList.push(action.payload);
+    });
+    builder.addCase(addNewMember.rejected, (state, action) => {
       state.isUpdated = false;
       console.log(action.payload);
     });

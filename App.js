@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import DisplayTask from "./Src/Screens/DisplayTask";
 import Confirm from "./Src/Screens/Confirm";
 import EditTask from "./Src/Screens/EditTask";
+import DisplayMember from "./Src/Screens/DisplayMember";
+import DeleteMember from "./Src/Screens/DisplayMember";
 
 export default function App() {
   return (
@@ -32,10 +34,12 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Add" component={AddTask} />
-          <Stack.Screen name="Add-Members" component={AddMembers} />
+          <Stack.Screen name="AddMembers" component={AddMembers} />
           <Stack.Screen name="DisplayTask" component={DisplayTask} />
           <Stack.Screen name="Confirm" component={Confirm} />
           <Stack.Screen name="EditTask" component={EditTask} />
+          <Stack.Screen name="DisplayMember" component={DisplayMember} />
+          <Stack.Screen name="DeleteMember" component={DeleteMember} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
