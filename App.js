@@ -10,6 +10,7 @@ import store from "./Src/Redux/Store/store";
 import { Provider } from "react-redux";
 import DisplayTask from "./Src/Screens/DisplayTask";
 import Confirm from "./Src/Screens/Confirm";
+import EditTask from "./Src/Screens/EditTask";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Add-Members" component={AddMembers} />
           <Stack.Screen name="DisplayTask" component={DisplayTask} />
           <Stack.Screen name="Confirm" component={Confirm} />
+          <Stack.Screen name="EditTask" component={EditTask} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

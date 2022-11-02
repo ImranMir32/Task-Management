@@ -13,10 +13,8 @@ const User = ({ navigation }) => {
         <Text style={styles.userName}>Mr.{userName}</Text>
         <TouchableOpacity
           onPress={() => {
-            dispatch(clearData());
             navigation.popToTop();
           }}
-          // style={styles.button}
         >
           <Image
             style={styles.tinyLogo}

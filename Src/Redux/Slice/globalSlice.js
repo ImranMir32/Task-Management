@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://3626-43-245-140-36.ngrok.io";
+const BASE_URL = "https://5efb-43-245-140-38.in.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -46,8 +46,8 @@ export const signIn = createAsyncThunk("global/signIn", async (params) => {
       password: params.password,
     },
   });
-  console.log(response.data.user.name);
-  console.log(response.data);
+  //console.log(response.data.user.name);
+  //console.log(response.data);
   return response.data;
 });
 
@@ -57,7 +57,7 @@ export const addNewTask = createAsyncThunk(
   async (params) => {
     const apiSubDirectory = "tasks";
     const apiDirectory = "private";
-    console.log(params);
+    //console.log(params);
     const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
     await axios({
       method: "POST",
@@ -72,7 +72,7 @@ export const addNewTask = createAsyncThunk(
         memberId: params.memberId,
       },
     });
-    console.log("done");
+    //console.log("done");
   }
 );
 
@@ -92,50 +92,29 @@ export const fetchAllTodo = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log("fetching --->");
-    // console.log(response.data);
-
     return response.data;
   }
 );
 
-// export const getTask = async (params) => {
-//   const apiSubDirectory = "tasks";
-//   const apiDirectory = "private";
-
-//   const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.Id}`;
-//   const response = await axios({
-//     method: "GET",
-//     url,
-//     headers: { Authorization: `Bearer ${params.token}` },
-//   });
-
-//   return response.data;
-// };
-
-//updateTask
-export const updateTask = createAsyncThunk(
-  "task/updateTask",
-  async (params) => {
-    const apiSubDirectory = "tasks";
-    const apiDirectory = "private";
-    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.taskId}`;
-    const response = await axios({
-      method: "PATCH",
-      url,
-      headers: {
-        Authorization: `Bearer ${params.token}`,
-        "Content-Type": "application/json",
-      },
-      data: {
-        title: params.title,
-        description: params.description,
-        memberId: params.memberId,
-      },
-    });
-    return response.data;
-  }
-);
+//editTask
+export const editTask = createAsyncThunk("task/editTask", async (params) => {
+  const apiSubDirectory = "tasks";
+  const apiDirectory = "private";
+  const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.id}`;
+  await axios({
+    method: "PATCH",
+    url,
+    headers: {
+      Authorization: `Bearer ${params.token}`,
+      "Content-Type": "application/json",
+    },
+    data: {
+      title: params.title,
+      description: params.description,
+      memberId: params.memberId,
+    },
+  });
+});
 
 //deleteTask
 export const deleteTask = createAsyncThunk(
@@ -151,7 +130,6 @@ export const deleteTask = createAsyncThunk(
       headers: { Authorization: `Bearer ${params.token}` },
     });
     console.log("delete sucessful");
-    return params.id;
   }
 );
 
@@ -159,7 +137,6 @@ export const deleteTask = createAsyncThunk(
 export const globalSlice = createSlice({
   name: "global",
   initialState: {
-    modalOpenSignIn: false,
     modalOpenSignUp: false,
     token: "",
     userName: "",
@@ -167,10 +144,8 @@ export const globalSlice = createSlice({
     email: "",
     password: "",
     password2: "",
-    title: "",
     description: "",
     shouldShowError: false,
-    shouldShowTitle: false,
     taskList: [],
     user: {},
     isLoading: false,
@@ -193,17 +168,12 @@ export const globalSlice = createSlice({
       state.isUpdated = action.payload;
     },
 
-    clearData: (state) => {
-      state.userName = "";
-      state.title = "";
-      state.description = "";
-      state.user = {};
-    },
-    clear: (state) => {
-      state.title = "";
-      state.description = "";
-      state.shouldShowTitle = false;
-    },
+    // clearData: (state) => {},
+    // clear: (state) => {
+    //   state.title = "";
+    //   state.description = "";
+    //   state.shouldShowTitle = false;
+    // },
   },
 
   //API
@@ -230,8 +200,8 @@ export const globalSlice = createSlice({
       state.isLoading = false;
       state.userName = action.payload.user.name;
       state.token = action.payload.token;
-      console.log("token is --> :");
-      console.log(action.payload.token);
+      //  console.log("token is --> :");
+      //  console.log(action.payload.token);
     });
     builder.addCase(signIn.rejected, (state, action) => {
       state.isLoading = false;
@@ -243,11 +213,11 @@ export const globalSlice = createSlice({
       state.isUpdated = false;
     });
     builder.addCase(addNewTask.fulfilled, (state, action) => {
-      state.title = "";
-      state.description = "";
-      state.shouldShowTitle = false;
+      // state.title = "";
+      //state.description = "";
+      //   state.shouldShowTitle = false;
       state.isUpdated = true;
-      state.taskList = action.payload;
+      // state.taskList = action.payload;
       //  state.taskList.push(action.payload);
     });
     builder.addCase(addNewTask.rejected, (state, action) => {
@@ -268,42 +238,30 @@ export const globalSlice = createSlice({
       state.isLoading = false;
     });
 
-    //updateTask
-    builder.addCase(updateTask.pending, (state) => {
+    //editTask
+    builder.addCase(editTask.pending, (state) => {
       state.isUpdated = false;
     });
-    builder.addCase(updateTask.fulfilled, (state, action) => {
-      const task = state.taskList.find((todo) => {
-        if (todo.id === action.payload.id) return todo;
-      });
-      task.title = action.payload.title;
-      task.description = action.payload.description;
-
-      state.title = "";
-      state.description = "";
-      state.shouldShowTitle = false;
+    builder.addCase(editTask.fulfilled, (state, action) => {
+      // state.title = "";
+      // state.description = "";
+      // state.shouldShowTitle = false;
       state.isUpdated = true;
     });
-    builder.addCase(updateTask.rejected, (state, action) => {
+    builder.addCase(editTask.rejected, (state, action) => {
       state.isUpdated = false;
       console.log(action.payload);
     });
 
     //delete
     builder.addCase(deleteTask.pending, (state) => {
-      state.isLoading = true;
+      state.isUpdated = false;
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.taskList = state.taskList.filter((task) => {
-        console.log(task.tasks.id);
-        task.tasks?.id !== action?.payload;
-      });
-      // state.isUpdated = true;
-      state.isLoading = false;
+      state.isUpdated = true;
     });
     builder.addCase(deleteTask.rejected, (state, action) => {
-      state.isLoading = false;
+      state.isUpdated = false;
       console.log(action.payload);
     });
   },
