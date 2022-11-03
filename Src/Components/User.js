@@ -14,6 +14,7 @@ const User = ({ navigation }) => {
         <TouchableOpacity
           style={styles.logout}
           onPress={() => {
+            dispatch(clearData());
             navigation.popToTop();
           }}
         >

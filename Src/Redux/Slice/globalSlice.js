@@ -236,11 +236,6 @@ export const globalSlice = createSlice({
     modalOpenSignUp: false,
     token: "",
     userName: "",
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-    description: "",
     shouldShowError: false,
     taskList: [],
     membersList: [],
@@ -263,6 +258,17 @@ export const globalSlice = createSlice({
     },
     setIsUpdate: (state, action) => {
       state.isUpdated = action.payload;
+    },
+    clearData: (state) => {
+      state.modalOpenSignUp = false;
+      state.token = "";
+      state.userName = "";
+      state.shouldShowError = false;
+      state.taskList = [];
+      state.membersList = [];
+      state.user = {};
+      state.isLoading = false;
+      state.isUpdated = false;
     },
   },
 

@@ -16,6 +16,7 @@ import {
   setUserName,
   // logIn,
   setShouldShowUser,
+  setShouldShowError,
   setModalOpenSignUp,
   signUp,
 } from "../Redux/Slice/globalSlice";
@@ -109,6 +110,7 @@ const SignUp = ({ navigation }) => {
                   !props.errors.password2 &&
                   props.touched.name
                 ) {
+                  dispatch(setShouldShowError(false));
                   dispatch(setModalOpenSignUp(false));
                 }
               }}
