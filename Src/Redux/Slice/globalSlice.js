@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://2127-43-245-140-36.ngrok.io";
+const BASE_URL = "https://22a3-103-31-154-230.in.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -195,13 +195,36 @@ export const addNewMember = createAsyncThunk(
 export const deleteMember = createAsyncThunk(
   "task/deleteMember",
   async (params) => {
+    console.log(params);
     const apiSubDirectory = "members";
     const apiDirectory = "private";
-    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.memberId}`;
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.id}`;
     await axios({
       method: "DELETE",
       url,
       headers: { Authorization: `Bearer ${params.token}` },
+    });
+    console.log("member delete sucessfully");
+  }
+);
+
+//Edit member
+export const editMember = createAsyncThunk(
+  "task/editMember",
+  async (params) => {
+    const apiSubDirectory = "members";
+    const apiDirectory = "private";
+    const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.id}`;
+    await axios({
+      method: "PATCH",
+      url,
+      headers: {
+        Authorization: `Bearer ${params.token}`,
+        "Content-Type": "application/json",
+      },
+      data: {
+        name: params.name,
+      },
     });
   }
 );
@@ -359,6 +382,33 @@ export const globalSlice = createSlice({
       //  state.taskList.push(action.payload);
     });
     builder.addCase(addNewMember.rejected, (state, action) => {
+      state.isUpdated = false;
+      console.log(action.payload);
+    });
+
+    //delete Member
+    builder.addCase(deleteMember.pending, (state) => {
+      state.isUpdated = false;
+    });
+    builder.addCase(deleteMember.fulfilled, (state, action) => {
+      state.isUpdated = true;
+    });
+    builder.addCase(deleteMember.rejected, (state, action) => {
+      state.isUpdated = false;
+      console.log(action.payload);
+    });
+
+    //edit Member
+    builder.addCase(editMember.pending, (state) => {
+      state.isUpdated = false;
+    });
+    builder.addCase(editMember.fulfilled, (state, action) => {
+      // state.title = "";
+      // state.description = "";
+      // state.shouldShowTitle = false;
+      state.isUpdated = true;
+    });
+    builder.addCase(editMember.rejected, (state, action) => {
       state.isUpdated = false;
       console.log(action.payload);
     });

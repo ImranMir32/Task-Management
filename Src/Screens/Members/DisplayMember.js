@@ -4,28 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 const DisplayMember = ({ navigation, route }) => {
   const { membersList } = useSelector((state) => state.global);
   // console.log("roubtee  --> ", route.params.info);
-  //   const name = route.params.info?.name;
-  //   const id = route.params.info?.id;
+  const name = route.params.info?.name;
+  const id = route.params.info?.id;
 
   return (
     <View style={styles.containers}>
       <View style={styles.show}>
         <View style={styles.need}>
           <Text style={styles.text}>Name:</Text>
-          {/* <Text style={styles.text_}>{route.params.info?.name}</Text>
-          <Text style={styles.text_}>{route.params.info?.id}</Text> */}
+          <Text style={styles.text_}>{name}</Text>
+          <Text style={styles.text_}>{id}</Text>
         </View>
       </View>
 
       <View style={styles.confirm}>
         <TouchableOpacity
           onPress={() => {
-            // const info = {
-            //   id: id,
-            //   title: title,
-            //   description: description,
-            // };
-            //   navigation.navigate("EditTask", { info: info });
+            const info = {
+              id: id,
+              name: name,
+            };
+            navigation.navigate("EditMember", { info: info });
           }}
           style={styles.button}
         >
@@ -35,8 +34,7 @@ const DisplayMember = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={() => {
             console.log("delte");
-            navigation.navigate("DeleteMember");
-            console.log("yes");
+            navigation.navigate("DeleteMember", { id: id });
           }}
           style={styles.button}
         >

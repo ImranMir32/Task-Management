@@ -17,7 +17,8 @@ import Confirm from "./Src/Screens/Tasks/Confirm";
 //Members
 import AddMembers from "./Src/Screens/Members/AddMembers";
 import DisplayMember from "./Src/Screens/Members/DisplayMember";
-import DeleteMember from "./Src/Screens/Members/DisplayMember";
+import DeleteMember from "./Src/Screens/Members/DeleteMember";
+import EditMember from "./Src/Screens/Members/EditMember";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
           <Stack.Screen name="EditTask" component={EditTask} />
           <Stack.Screen name="DisplayMember" component={DisplayMember} />
           <Stack.Screen name="DeleteMember" component={DeleteMember} />
+          <Stack.Screen name="EditMember" component={EditMember} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

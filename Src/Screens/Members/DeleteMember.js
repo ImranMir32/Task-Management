@@ -6,8 +6,9 @@ import { deleteMember } from "../../Redux/Slice/globalSlice";
 const DeleteMember = ({ navigation, route }) => {
   const { token } = useSelector((state) => state.global);
   const dispatch = useDispatch();
-  // const { id } = route.params.id;
-  console.log("id-->", route);
+  const id = route.params.id;
+  //console.log("route", route.params.id);
+  console.log(id);
   return (
     <View style={styles.back}>
       <View style={styles.containers}>
@@ -28,6 +29,7 @@ const DeleteMember = ({ navigation, route }) => {
               };
               dispatch(deleteMember(info));
               navigation.goBack();
+              // navigation.navigate("Members");
             }}
           >
             <Text style={styles.text}>Yes</Text>
