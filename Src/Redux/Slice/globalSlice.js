@@ -148,22 +148,6 @@ export const getAllMembers = createAsyncThunk(
       url,
       headers: { Authorization: `Bearer ${token}` },
     });
-    // const memberList = response.data.members;
-    // console.log("get all yes");
-    // const newMemberList = memberList.map((member) => {
-    //   const taskCount = params.taskList.reduce((count, task) => {
-    //     if (member.id === task.memberId) {
-    //       count++;
-    //     }
-
-    //     return count;
-    //   }, 0);
-
-    //   member.taskCount = taskCount;
-    //   return member;
-    // });
-    // console.log("new list--> ", newMemberList);
-    // return newMemberList;
 
     return response.data.members;
   }
