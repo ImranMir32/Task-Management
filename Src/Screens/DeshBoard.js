@@ -1,14 +1,7 @@
-import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 //import User from "./User";
-import { useDispatch, useSelector } from "react-redux";
-import User from "../Components/User";
-import {
-  setUserName,
-  // logIn,
-  setShouldShowUser,
-  fetchAllTodo,
-} from "../Redux/Slice/globalSlice";
+import { useSelector } from "react-redux";
 
 const DeshBoard = ({ navigation }) => {
   const { userName, shouldShowUser, token } = useSelector(

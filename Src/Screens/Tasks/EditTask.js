@@ -4,14 +4,13 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import { useEffect } from "react";
 import * as yup from "yup";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { addNewTask, editTask } from "../../Redux/Slice/globalSlice";
+import { editTask } from "../../Redux/Slice/globalSlice";
 
 const signInSchema = yup.object({
   title: yup.string().required(),
@@ -24,6 +23,7 @@ const EditTask = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const title = route.params.info.title;
   const description = route.params.info.description;
+  const memberId = route.params.info.memberId;
   const id = route.params.info.id;
   console.log(title);
   //   const title = task.title;
@@ -44,7 +44,7 @@ const EditTask = ({ navigation, route }) => {
           const info = {
             title: values.title,
             description: values.description,
-            memberId: 1,
+            memberId: memberId,
             id: id,
             token: token,
           };

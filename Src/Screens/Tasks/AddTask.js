@@ -4,13 +4,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import * as yup from "yup";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { useState } from "react";
 import { addNewTask } from "../../Redux/Slice/globalSlice";
+import { DropDown } from "../DropDown";
 
 const signInSchema = yup.object({
   title: yup.string().required(),
@@ -18,6 +20,7 @@ const signInSchema = yup.object({
 });
 
 const AddTask = ({ navigation }) => {
+  const [memberId, setMemberId] = useState();
   const { token } = useSelector((state) => state.global);
   const dispatch = useDispatch();
 
@@ -26,16 +29,15 @@ const AddTask = ({ navigation }) => {
       <Formik
         initialValues={{ title: "", description: "" }}
         validationSchema={signInSchema}
-        onSubmit={async (values, actions) => {
+        onSubmit={(values, actions) => {
           actions.resetForm();
           console.log(values);
           const info = {
             title: values.title,
             description: values.description,
-            memberId: 1,
+            memberId: memberId,
             token: token,
           };
-          console.log("calling");
           dispatch(addNewTask(info));
           //
         }}
@@ -70,6 +72,7 @@ const AddTask = ({ navigation }) => {
 
             <View>
               <Text style={styles.assign}>Assign To:</Text>
+            <DropDown memberId={memberId} setMemberId={setMemberId} />
             </View>
             <View style={styles.boxs}>
               <TouchableOpacity

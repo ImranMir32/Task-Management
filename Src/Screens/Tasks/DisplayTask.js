@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const checkDescription = (description) => {
@@ -15,6 +15,7 @@ export default DisplayTask = ({ navigation, route }) => {
   const title = route.params.info.title;
   const description = route.params.info.description;
   const id = route.params.info.id;
+  const memberId = route.params.info.memberId;
   const dispatch = useDispatch();
 
   return (
@@ -41,6 +42,7 @@ export default DisplayTask = ({ navigation, route }) => {
               id: id,
               title: title,
               description: description,
+              memberId: memberId,
             };
             navigation.navigate("EditTask", { info: info });
           }}

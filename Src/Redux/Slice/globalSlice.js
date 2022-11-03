@@ -1,8 +1,8 @@
-import { Alert, Keyboard } from "react-native";
-import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { Alert, Keyboard } from "react-native";
 
-const BASE_URL = "https://cc31-43-245-140-39.in.ngrok.io";
+const BASE_URL = "https://e323-43-245-140-36.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -57,7 +57,7 @@ export const addNewTask = createAsyncThunk(
   async (params) => {
     const apiSubDirectory = "tasks";
     const apiDirectory = "private";
-    //console.log(params);
+    // console.log(params);
     const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/`;
     await axios({
       method: "POST",
@@ -72,7 +72,7 @@ export const addNewTask = createAsyncThunk(
         memberId: params.memberId,
       },
     });
-    //console.log("done");
+    // console.log("done");
   }
 );
 
@@ -101,6 +101,7 @@ export const editTask = createAsyncThunk("task/editTask", async (params) => {
   const apiSubDirectory = "tasks";
   const apiDirectory = "private";
   const url = `${BASE_URL}/${apiDirectory}/${apiSubDirectory}/${params.id}`;
+  console.log(params);
   await axios({
     method: "PATCH",
     url,
@@ -229,6 +230,17 @@ export const editMember = createAsyncThunk(
   }
 );
 
+export const dropDownList = (memberList) => {
+  const newMemberList = memberList.map((member) => {
+    return {
+      label: member.name,
+      value: member.id,
+    };
+  });
+
+  return newMemberList;
+};
+
 //globalSlice
 export const globalSlice = createSlice({
   name: "global",
@@ -318,7 +330,7 @@ export const globalSlice = createSlice({
     });
     builder.addCase(addNewTask.rejected, (state, action) => {
       state.isUpdated = false;
-      console.log(action.payload);
+      console.log(action.error);
     });
 
     //fetchAllTodo
@@ -346,7 +358,7 @@ export const globalSlice = createSlice({
     });
     builder.addCase(editTask.rejected, (state, action) => {
       state.isUpdated = false;
-      console.log(action.payload);
+      console.log(action.error);
     });
 
     //delete

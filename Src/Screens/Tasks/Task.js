@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllTodo } from "../../Redux/Slice/globalSlice";
+import { fetchAllTodo, getAllMembers } from "../../Redux/Slice/globalSlice";
 
 import ViewList from "./ViewList";
 
@@ -12,6 +12,7 @@ const Task = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTodo(token));
+    dispatch(getAllMembers(token ));
   }, []);
   useEffect(() => {
     if (isUpdated) dispatch(fetchAllTodo(token));
