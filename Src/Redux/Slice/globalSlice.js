@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://5199-43-245-140-38.in.ngrok.io";
+const BASE_URL = "https://cc31-43-245-140-39.in.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {
@@ -274,7 +274,7 @@ export const globalSlice = createSlice({
     });
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.userName = action.payload.name;
+      // state.userName = action.payload.name;
       Alert.alert("Acount has been created sucessfully");
     });
     builder.addCase(signUp.rejected, (state, action) => {
