@@ -2,7 +2,7 @@ import { Alert, Keyboard } from "react-native";
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://22a3-103-31-154-230.in.ngrok.io";
+const BASE_URL = "https://5199-43-245-140-38.in.ngrok.io";
 
 //register
 export const signUp = createAsyncThunk("global/signup", async (params) => {

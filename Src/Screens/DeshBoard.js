@@ -17,9 +17,19 @@ const DeshBoard = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <User navigation={navigation} />
+      {/* <User navigation={navigation} /> */}
       <View>
-        <Text>Get Started</Text>
+        <View style={styles.start}>
+          <Text style={styles.startText}>
+            Welcome to Task Management System
+          </Text>
+          <Text style={styles.startDescription}>
+            This is an simple application for assigning tasks to members of the
+            industry. Each members can be assigned different tasks.Users can
+            create new tasks or add members. If wished tasks and members can
+            also be deleted or edited accordingly.
+          </Text>
+        </View>
         <View style={styles.boxs}>
           <TouchableOpacity
             onPress={() => {
@@ -49,6 +59,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#9DCEFF",
     flex: 1,
   },
+  start: {
+    padding: 7,
+  },
+  startText: {
+    fontWeight: "bold",
+    fontSize: 21,
+  },
+  startDescription: {
+    marginTop: 10,
+    fontSize: 15,
+  },
   logo: {
     marginBottom: 25,
   },
@@ -69,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
-    marginTop: 150,
+    marginTop: 100,
     alignItems: "center",
     justifyContent: "center",
     margin: 15,

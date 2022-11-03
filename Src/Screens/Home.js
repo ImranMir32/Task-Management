@@ -52,7 +52,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <Formik
-            initialValues={{ email: "King@gmail.com", password: "1234" }}
+            initialValues={{ email: "", password: "" }}
             validationSchema={signInSchema}
             onSubmit={(values, actions) => {
               actions.resetForm();

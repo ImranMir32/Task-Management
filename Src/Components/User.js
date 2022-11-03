@@ -12,6 +12,7 @@ const User = ({ navigation }) => {
       <View style={styles.bar}>
         <Text style={styles.userName}>Mr.{userName}</Text>
         <TouchableOpacity
+          style={styles.logout}
           onPress={() => {
             navigation.popToTop();
           }}
@@ -41,6 +42,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 25,
     marginRight: 10,
+  },
+  logout: {
+    paddingLeft: 7,
+    paddingRight: 7,
   },
   tinyLogo: {
     marginTop: 5,

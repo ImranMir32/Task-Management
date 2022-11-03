@@ -47,6 +47,9 @@ const SignUp = ({ navigation }) => {
       >
         {(props) => (
           <View>
+            <View>
+              <Text style={styles.text_}>Please fill-up the form :</Text>
+            </View>
             <TextInput
               style={styles.input}
               placeholder="Enter Your name"
@@ -144,9 +147,11 @@ const styles = StyleSheet.create({
     borderColor: "#c0c0c0",
     borderWidth: 1,
   },
+
   button: {
     height: 50,
-    width: 100,
+    width: 200,
+    marginLeft: 23,
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -164,10 +169,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   text_: {
-    marginTop: 10,
     marginBottom: 5,
-    fontSize: 15,
-    lineHeight: 15,
+    fontSize: 17,
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
@@ -187,37 +190,3 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
-
-{
-  /* <Text style={styles.text_}>Enter Your User-Name</Text>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <TextInput
-        style={styles.input}
-        placeholder={"Enter your userName max(5)"}
-        value={userName}
-        onChangeText={(userName) => dispatch(setUserName(userName))}
-        maxLength={5}
-      />
-      <View>
-        {/* {shouldShowUser ? (
-          <Text style={styles.req}>*username is required </Text>
-        ) : null} */
-}
-// </View>
-// </KeyboardAvoidingView>
-// <TouchableOpacity
-//   onPress={async () => {
-//     if (!checkUser(userName)) {
-//       dispatch(setShouldShowUser(true));
-//     }
-//     if (checkUser(userName)) {
-//       //await dispatch(logIn(userName));
-//       navigation.navigate("Tabs");
-//     }
-//   }}
-//   style={styles.button}
-// >
-//   <Text style={styles.text}>LogIn</Text>
-// </TouchableOpacity> */}

@@ -21,7 +21,7 @@ const Members = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text_}>All tasks</Text>
+      <Text style={styles.text_}>All Members</Text>
       <Text style={styles.text__}>You will find all members here</Text>
       <View style={styles.add}>
         <Text style={styles.text_}>Here is all Members : </Text>

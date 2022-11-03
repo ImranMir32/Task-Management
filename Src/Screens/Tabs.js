@@ -16,9 +16,6 @@ import User from "../Components/User";
 import DeshBoard from "./DeshBoard";
 import Task from "./Tasks/Task";
 import Members from "./Members/Members";
-// import Ionic from "react-native-vector-icons/Ionicons";
-// import { Ionicons } from "@expo/vector-icons";
-// //import { View } from "react-native";
 
 export default function App() {
   return (
@@ -37,36 +34,25 @@ export default function App() {
           ...Styles.shadow,
         },
       }}
-
-      // tabBarOptions={{
-      //   activeTintColor: "#101010",
-      //   style: {
-      //     backgroundColor: "#ffd700",
-      //   },
-      // }}
-      // screenOptions={({ route }) => ({
-      //   tabBarIcon: ({ color, size }) => {
-      //     let iconName;
-      //     if (route.name == "Home") {
-      //       iconName = "ios-home";
-      //     } else if (route.name == "Task") {
-      //       iconName = "taskstasks";
-      //     }
-      //     return <Ionicons name={iconName} color={color} size={size} />;
-      //   },
-      // })}
     >
       <Tab.Screen
-        name="Home1"
+        name="Home"
         component={DeshBoard}
         options={{
-          // header: () => {
-          //   return(
-          //     <View style={{ backgroudColor: "red" }}>
-          //     <User />
-          //   </View>;
-          //   ),
-          // },
+          header: ({ navigation }) => {
+            return (
+              <View>
+                <View
+                  style={{
+                    paddingTop: 40,
+                    paddingBottom: 40,
+                  }}
+                >
+                  <User navigation={navigation} />
+                </View>
+              </View>
+            );
+          },
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -99,12 +85,25 @@ export default function App() {
         name="Task"
         component={Task}
         options={{
+          header: ({ navigation }) => {
+            return (
+              <View>
+                <View
+                  style={{
+                    paddingTop: 40,
+                    paddingBottom: 40,
+                  }}
+                >
+                  <User navigation={navigation} />
+                </View>
+              </View>
+            );
+          },
           tabBarIcon: ({ focused }) => (
             <View
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                // top: 10,
               }}
             >
               <Image
@@ -127,22 +126,25 @@ export default function App() {
             </View>
           ),
         }}
-        // options={{
-        //   headerLeft: () => null,
-        //   title: "Tasks",
-        //   headerStyle: {
-        //     backgroundColor: "#f4511e",
-        //   },
-        //   headerTintColor: "#fff",
-        //   headerTitleStyle: {
-        //     fontWeight: "bold",
-        //   },
-        // }}
       />
       <Tab.Screen
         name="Members"
         component={Members}
         options={{
+          header: ({ navigation }) => {
+            return (
+              <View>
+                <View
+                  style={{
+                    paddingTop: 40,
+                    paddingBottom: 40,
+                  }}
+                >
+                  <User navigation={navigation} />
+                </View>
+              </View>
+            );
+          },
           tabBarIcon: ({ focused }) => (
             <View
               style={{
