@@ -4,7 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import * as yup from "yup";
 
@@ -26,13 +26,6 @@ const EditTask = ({ navigation, route }) => {
   const memberId = route.params.info.memberId;
   const id = route.params.info.id;
   console.log(title);
-  //   const title = task.title;
-  //   const description = task.description;
-  //   const id = task.id;
-  //   useEffect(() => {
-  //     dispatch(setTitle(task.title));
-  //     dispatch(setDescription(task.description));
-  //   }, []);
   return (
     <View style={styles.back}>
       <Formik
@@ -48,9 +41,9 @@ const EditTask = ({ navigation, route }) => {
             id: id,
             token: token,
           };
-          console.log("calling");
+          //  console.log("calling");
           dispatch(editTask(info));
-          console.log("end");
+          // console.log("end");
           //
         }}
       >
@@ -124,6 +117,11 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: 65,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  boxs: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
